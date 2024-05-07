@@ -16,5 +16,12 @@ pipeline {
             }
         }
 
+        stage('Test') {
+            steps {
+                echo 'Testing the application...'
+                // Add your test steps here
+            }
+        }
+
     }
 }
