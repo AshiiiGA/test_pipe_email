@@ -10,7 +10,8 @@ pipeline {
         pollSCM('H/5 * * * *') // Poll every 5 minutes for changes
     }
 
-    stage('Build') {
+    stages {
+        stage('Build') {
             steps {
                 echo 'Building code with Maven...' 
             }
@@ -142,3 +143,5 @@ pipeline {
             )
         }
     }
+
+}
