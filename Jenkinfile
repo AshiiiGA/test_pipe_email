@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        GITHUB_REPO = 'https://github.com/AshiiiGA/test_pipe_email.git'
-        EMAIL_RECIPIENT = '12imashaashini@gmail.com'
+        GITHUB_REPO = 'https://github.com/your-username/your-repo.git'
+        EMAIL_RECIPIENT = 'your-email@example.com'
     }
 
     triggers {
@@ -11,138 +11,69 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
+        stage('Stage 1: Build') {
             steps {
-                echo 'Building code with Maven...' 
+                echo 'Building the code using Maven'
+                // Implement Maven build steps
             }
         }
-        stage('Unit and Integration Tests') {
+
+        stage('Stage 2: Unit and Integration Tests') {
             steps {
-                echo 'Running unit tests with JUnit...' 
-                echo 'Running integration tests with Selenium...' 
-                echo 'test'
-            }
-            post {
-                success {
-                    emailext (
-                        to: '12imashaashini@gmail.com', 
-                        subject: "Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER} - Unit/Integration Tests Passed!", 
-                        body: "Unit and Integration Tests successful! Pipeline: ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Runtime: ${currentBuild.durationString}",
-                        attachLog: true
-                    )
-                }
-                failure {
-                    emailext (
-                        to: '12imashaashini@gmail.com', 
-                        subject: "Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER} - Unit/Integration Tests Failed!", 
-                        body: "Unit and Integration Tests failed! Pipeline: ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Runtime: ${currentBuild.durationString}",
-                        attachLog: true 
-                    )
-                }
+                echo 'Running unit tests using JUnit'
+                echo 'Running integration tests using Selenium'
+                // Implement unit and integration test steps
             }
         }
-        stage('Code Analysis') {
+
+        stage('Stage 3: Code Analysis') {
             steps {
-                echo 'Analyzing code with SonarQube...' 
-            }
-            // post {
-            //     success {
-            //         emailext (
-            //             to: '12imashaashini@gmail.com', 
-            //             subject: "Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER} - Code Analysis Passed!", 
-            //             body: "Code analysis successful Pipeline: ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Runtime: ${currentBuild.durationString}",
-            //             attachLog: true // Attach the build log
-            //         )
-            //     }
-            //     failure {
-            //         emailext (
-            //             to: '12imashaashini@gmail.com', 
-            //             subject: "Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER} - Code Analysis Failed!", 
-            //             body: "Code analysis identified issues! Pipeline: ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Runtime: ${currentBuild.durationString}",
-            //             attachLog: true // Attach the build log
-            //         )
-            //     }
-            // }
-        }
-        stage('Security Scan') {
-            steps {
-                echo 'BlackDuck Scanning...' 
-            }
-            // post {
-            //     success {
-            //         emailext (
-            //             to: '12imashaashini@gmail.com', 
-            //             subject: "Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER} - BlackDuck Scan Passed!", 
-            //             body: "Security vulnerabilities check passed: ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Runtime: ${currentBuild.durationString}",
-            //             attachLog: true // Attach the build log
-            //         )
-            //     }
-            //     failure {
-            //         emailext (
-            //             to: '12imashaashini@gmail.com', 
-            //             subject: "Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER} - Security Scan Failed!", 
-            //             body: "Security vulnerabilities found! Pipeline: ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Runtime: ${currentBuild.durationString}",
-            //             attachLog: true // Attach the build log
-            //         )
-            //     }
-            // }
-        }
-        stage('Deploy to Staging') {
-            steps {
-                echo 'Provision AWS Resources in QA AWS Account..'
-                echo 'Deploy Application to QA AWS..' 
+                echo 'Analyzing code using SonarQube'
+                // Implement SonarQube code analysis steps
             }
         }
-        stage('Integration Tests on Staging') {
+
+        stage('Stage 4: Security Scan') {
             steps {
-                echo 'Running integration tests on staging environment...' 
+                echo 'Performing security scan using OWASP ZAP'
+                // Implement OWASP ZAP security scan steps
             }
-            // post {
-            //     success {
-            //         emailext (
-            //             to: '12imashaashini@gmail.com', 
-            //             subject: "Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER} - Integration Tests on Staging Passed!", 
-            //             body: "Integration tests on staging environment passed! Pipeline: ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Runtime: ${currentBuild.durationString}",
-            //             attachLog: true // Attach the build log
-            //         )
-            //     }
-            //     failure {
-            //         emailext (
-            //             to: '12imashaashini@gmail.com', 
-            //             subject: "Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER} - Integration Tests on Staging Failed!", 
-            //             body: "Integration tests on staging environment failed! Pipeline: ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Runtime: ${currentBuild.durationString}",
-            //             attachLog: true // Attach the build log
-            //         )
-            //     }
-            // }
         }
-        stage('Deploy to Production') {
+
+        stage('Stage 5: Deploy to Staging') {
             steps {
-                echo 'Provision AWS Resources in Prod AWS Account..'
-                echo 'Deploy Application to Prod AWS..'
-                echo "for autobuild test - change 3"
+                echo 'Deploying to AWS EC2 staging server'
+                // Implement deployment steps to staging server
+            }
+        }
+
+        stage('Stage 6: Integration Tests on Staging') {
+            steps {
+                echo 'Running integration tests on staging using Selenium'
+                // Implement integration test steps on staging
+            }
+        }
+
+        stage('Stage 7: Deploy to Production') {
+            steps {
+                echo 'Deploying to AWS EC2 production server'
+                // Implement deployment steps to production server
             }
         }
     }
-    
-    // post {
-    //     always {
-    //         // Archive the build log if it exists
-    //         script {
-    //             def buildLogFilePath = "${env.WORKSPACE}/build.log"
-    //             if (fileExists(buildLogFilePath)) {
-    //                 archiveArtifacts artifacts: 'build.log', excludes: ''
-    //             }
-    //         }
-            
-    //         // Attach the archived files
-    //         emailext (
-    //             to: '12imashaashini@gmail.com', 
-    //             subject: "Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER} - Build Log and Other Attachments", 
-    //             body: "Pipeline: ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Runtime: ${currentBuild.durationString}",
-    //             attachLog: true // Attach the build log
-    //         )
-    //    }
-    // }
 
+    post {
+        always {
+            emailext (
+                subject: "Pipeline Status: ${currentBuild.fullDisplayName}",
+                body: """
+                    Pipeline Status: ${currentBuild.currentResult}
+                    See the logs for more details.
+                """,
+                attachLog: true,
+                to: "${env.EMAIL_RECIPIENT}",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+            )
+        }
+    }
 }
