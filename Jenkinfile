@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         GITHUB_REPO = 'https://github.com/your-username/your-repo.git'
-        EMAIL_RECIPIENT = 'your-email@example.com'
+        EMAIL_RECIPIENT = '12imashaashini@gmail.com'
     }
 
     triggers {
