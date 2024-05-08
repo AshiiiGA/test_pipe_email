@@ -36,7 +36,7 @@ pipeline {
                         to: '12imashaashini@gmail.com', 
                         subject: "Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER} - Unit/Integration Tests Failed!", 
                         body: "Unit and Integration Tests failed! Pipeline: ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Runtime: ${currentBuild.durationString}",
-                        attachLog: true // Attach the build log
+                        attachLog: true 
                     )
                 }
             }
