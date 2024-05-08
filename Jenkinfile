@@ -26,7 +26,9 @@ pipeline {
                 success {
                     emailext (
                         to: '12imashaashini@gmail.com', 
-                        subject: "Pipeline" 
+                        subject: "Pipeline", 
+                        body: 'This is the email body.',
+                    
                         // ${env.JOB_NAME} #${env.BUILD_NUMBER} - Unit/Integration Tests Passed!", 
                         // // body: "Unit and Integration Tests successful! Pipeline: ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Runtime: ${currentBuild.durationString}",
                         // // attachLog: true // Attach the build log
